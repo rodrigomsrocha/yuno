@@ -9,8 +9,8 @@ Este repositório contém o projeto completo do **Yuno**, um aplicativo de produ
 ```bash
 yuno/
 ├── apps/
-│   ├── backend/      # API local com NestJS
-│   └── frontend/     # Interface React + Tauri
+│   ├── api/      # API local com NestJS
+│   └── desktop/     # Interface React + Tauri
 ├── packages/
 │   └── shared/       # Tipos TypeScript e utilitários comuns
 ├── pnpm-workspace.yaml
