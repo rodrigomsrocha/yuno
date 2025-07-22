@@ -28,7 +28,7 @@ export class TasksController {
   @Get()
   @HttpCode(200)
   getTasks(): Promise<Task[]> {
-    return this.tasksService.getTasks() as Promise<Task[]>;
+    return this.tasksService.getTasks();
   }
 
   @Get(':id')

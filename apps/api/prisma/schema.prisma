@@ -14,10 +14,35 @@ datasource db {
 }
 
 model Task {
-  id          String   @id @default(uuid())
-  title       String
-  description String?
-  status      String   @default("todo")
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id            String          @id @default(uuid())
+  title         String
+  description   String?
+  status        String          @default("todo")
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  PomodoroCycle PomodoroCycle[]
+}
+
+model PomodoroCycle {
+  id           String    @id @default(uuid())
+  taskId       String
+  currentRound Int       @default(0)
+  isCompleted  Boolean   @default(false)
+  startTime    DateTime  @default(now())
+  endTime      DateTime?
+
+  task            Task              @relation(fields: [taskId], references: [id])
+  PomodoroSession PomodoroSession[]
+}
+
+model PomodoroSession {
+  id        String    @id @default(uuid())
+  cycleId   String
+  type      String
+  round     Int
+  startTime DateTime  @default(now())
+  endTime   DateTime?
+  status    String
+
+  cycle PomodoroCycle @relation(fields: [cycleId], references: [id])
 }

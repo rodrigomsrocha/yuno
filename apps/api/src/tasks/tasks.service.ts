@@ -3,24 +3,25 @@ import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { UpdateTaskStatusDto } from './dto/update-task-status.dto';
+import { Task } from 'shared';
 
 @Injectable()
 export class TasksService {
   constructor(private prisma: PrismaService) {}
 
   async createTask(task: CreateTaskDto) {
-    return this.prisma.task.create({
+    return await this.prisma.task.create({
       data: {
         ...task,
       },
     });
   }
 
-  async getTasks() {
-    return await this.prisma.task.findMany();
+  async getTasks(): Promise<Task[]> {
+    return (await this.prisma.task.findMany()) as Task[];
   }
 
-  async getTaskById(id: string) {
+  async getTaskById(id: string): Promise<Task> {
     const task = await this.prisma.task.findFirst({
       where: { id },
     });
@@ -29,7 +30,7 @@ export class TasksService {
       throw new NotFoundException(`Task with ID ${id} not found`);
     }
 
-    return task;
+    return task as Task;
   }
 
   async updateTask(id: string, task: UpdateTaskDto) {
